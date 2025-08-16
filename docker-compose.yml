@@ -1,0 +1,31 @@
+    version: "3"
+    services:
+      client:
+        image: "kp27docker/multi-client"
+        mem_limit: 128m
+        hostname: client
+      server:
+        image: "kp27docker/multi-server"
+        mem_limit: 128m
+        hostname: api
+        environment:
+          - REDIS_HOST=$REDIS_HOST
+          - REDIS_PORT=$REDIS_PORT
+          - PGUSER=$PGUSER
+          - PGHOST=$PGHOST
+          - PGDATABASE=$PGDATABASE
+          - PGPASSWORD=$PGPASSWORD
+          - PGPORT=$PGPORT
+      worker:
+        image: "kp27docker/multi-worker"
+        mem_limit: 128m
+        hostname: worker
+        environment:
+          - REDIS_HOST=$REDIS_HOST
+          - REDIS_PORT=$REDIS_PORT
+      nginx:
+        image: "kp27docker/multi-nginx"
+        mem_limit: 128m
+        hostname: nginx
+        ports:
+          - "80:80"
